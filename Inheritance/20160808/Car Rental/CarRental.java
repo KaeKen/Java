@@ -10,9 +10,13 @@ public class CarRental {
 	public CarRental(String rentersName, int zipCode, String sizeCarRented, double lengthRentalDays) {
 		this.rentersName = rentersName;
 		this.zipCode = zipCode;
+
 		this.sizeCarRented = sizeCarRented;
 		this.lengthRentalDays = lengthRentalDays;
-		
+
+		this.lengthRentalDays = lengthRentalDays;
+
+
 		switch(sizeCarRented){
 			case "economy": 
 				dailyRentalFee = 29.99;
@@ -23,6 +27,7 @@ public class CarRental {
 			case "fullsize":
 				dailyRentalFee = 43.50;
 				break;
+
 		}
 		tRentalFee = lengthRentalDays * dailyRentalFee;
 	}
@@ -34,10 +39,17 @@ public class CarRental {
 				"\nType of rental: " + lengthRentalDays +
 				"\nDaily rental rate: " + dailyRentalFee +
 				"\nTotal rental fee: " + (tRentalFee + extrafee));
+
+
 	}
 
 	public void display() {
 		display(0);
-	}	
+		System.out.println("zipCode = " + zipCode);
+		System.out.println("dailyRentalFee = " + dailyRentalFee);
+		System.out.println("");
+
+	}
+
 	
 }

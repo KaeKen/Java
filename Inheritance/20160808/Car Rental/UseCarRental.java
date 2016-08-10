@@ -19,21 +19,18 @@ public class UseCarRental {
 	  System.out.print("How many days?: ");
 	  rentalDays = inputNum.nextInt();
 	  
-	  if(typeCar.equals("standard")){
-		  CarRental standardcar = new CarRental(rentersName, zipCode, sizeCar, rentalDays);
-		  standardcar.display();
-	  }else if(typeCar.equals("luxury")){
-		  LuxuryCarRental luxurycar = new LuxuryCarRental(rentersName, zipCode, sizeCar, rentalDays);
-		  
-		  System.out.print("Would you like to use a Chauffer? [Y/N]: ");
+	  if("standard".equals(typeCar)){
+		  CarRental standardCar = new CarRental(rentersName, zipCode, sizeCar, rentalDays);
+		  standardCar.display();
+	  }else if ("luxury".equals(typeCar)) {
+		  LuxuryCarRental luxuryCar = new LuxuryCarRental(rentersName, zipCode, sizeCar, rentalDays);
+
+		  System.out.print("Would you like to use a Chauffeur? [Y/N]: ");
 		  option = inputString.nextLine();
-		  
-		  if(option.equals("Y") || option.equals("y")){
-			  luxurycar.display(200);
-		  }else{
-			  luxurycar.display();
-		  }
+
+		  if ("Y".equals(option) || "y".equals(option)) {
+			  luxuryCar.display(200);
+		  } else luxuryCar.display();
 	  }
-	  
   }
 }
