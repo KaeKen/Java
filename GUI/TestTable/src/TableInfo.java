@@ -10,11 +10,9 @@ public class TableInfo extends JFrame implements ActionListener{
     GridBagConstraints gbc;
     JLabel userInfo;
     JTextField firstInput, lastInput;
-    JTextArea textArea;
     JButton deleteButton, addButton, modifyButton;
     JTable table;
     PersonTableModel personTable;
-    int selectedRow, selectedCol;
 
     public TableInfo(){
         initComponent();
