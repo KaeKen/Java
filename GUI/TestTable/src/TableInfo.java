@@ -11,75 +11,88 @@ public class TableInfo extends JFrame implements ActionListener{
     JLabel userInfo;
     JTextField firstInput, lastInput;
     JTextArea textArea;
-    JButton button, saveButton;
+    JButton deleteButton, addButton, modifyButton;
     JTable table;
     PersonTableModel personTable;
-    JScrollPane scrollTable;
+    int selectedRow, selectedCol;
 
     public TableInfo(){
         initComponent();
 
+        // -- labels -- //
         gbc.gridwidth = 1;
+
         addModule(userInfo, "First name", 0, 0);
-
-        gbc.gridwidth = 5;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        //addModule(firstInput, 17, 1, 0);
-
-        firstInput = new JTextField(17);
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        pane.add(firstInput, gbc);
-
-        gbc.gridwidth = 1;
         addModule(userInfo, "Last name", 0, 1);
 
-        gbc.gridwidth = 5;
+        // -- fields -- //
+        gbc.gridwidth = 4;
         gbc.fill = GridBagConstraints.HORIZONTAL;
+
+        firstInput = new JTextField(17);
+        addModule(firstInput, 1, 0);
+
         lastInput = new JTextField(17);
-        gbc.gridx = 1;
-        gbc.gridy = 1;
-        pane.add(lastInput, gbc);
+        addModule(lastInput, 1, 1);
 
+        // -- buttons -- //
         gbc.gridwidth = 1;
-        gbc.anchor = GridBagConstraints.LINE_END;
-        saveButton = new JButton("Add");
-        gbc.gridx = 1;
-        gbc.gridy = 2;
-        saveButton.addActionListener(this);
-        pane.add(saveButton, gbc);
-        addModule(button, "Delete", 2, 2);
-        gbc.gridwidth = 1;
-        addModule(button, "Modify", 3, 2);
+        gbc.anchor = GridBagConstraints.LINE_START;
 
+        addButton = new JButton("Add");
+        addButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                personTable.getPersons().add(new Person(firstInput.getText(), lastInput.getText()));
+                personTable.fireTableDataChanged();
+            }
+        });
+        addModule(addButton, 1, 2);
+
+        deleteButton = new JButton("Delete");
+        deleteButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                personTable.getPersons().remove(table.getSelectedRow());
+                personTable.fireTableDataChanged();
+            }
+        });
+        addModule(deleteButton, 2, 2);
+
+        modifyButton = new JButton("Modify");
+        modifyButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Person thisPerson = personTable.getPersons().get(table.getSelectedRow());
+                thisPerson.setFirstName(firstInput.getText());
+                thisPerson.setLastName(lastInput.getText());
+                personTable.fireTableDataChanged();
+            }
+        });
+        addModule(modifyButton, 3, 2);
+
+        // -- tables -- //
         gbc.fill = GridBagConstraints.BOTH;
-        gbc.gridx = 0;
-        gbc.gridy = 3;
-        gbc.gridwidth = 6;
+        gbc.gridwidth = 5;
+
+        modulePos(0, 3);
         personTable = new PersonTableModel();
         table = new JTable(personTable);
         pane.add(new JScrollPane(table), gbc);
-
-
-
 
         container.add(pane);
         containerSettings();
         pack();
     }
 
+    // -- static modules -- //
     public void addModule(JLabel thisLabel, String msg, int x, int y){
         thisLabel = new JLabel(msg);
         modulePos(x, y);
         pane.add(thisLabel, gbc);
     }
-    public void addModule(JTextField thisField, int length, int x, int y){
-        thisField = new JTextField(length);
+    public void addModule(JTextField thisField, int x, int y){
         modulePos(x, y);
         pane.add(thisField, gbc);
     }
-    public void addModule(JButton thisButton, String msg, int x, int y){
-        thisButton = new JButton(msg);
+    public void addModule(JButton thisButton, int x, int y){
         modulePos(x, y);
         pane.add(thisButton, gbc);
     }
@@ -99,9 +112,5 @@ public class TableInfo extends JFrame implements ActionListener{
     }
 
     @Override
-    public void actionPerformed(ActionEvent e){
-        personTable.getPersons().add(new Person(firstInput.getText(), lastInput.getText()));
-        personTable.fireTableDataChanged();
-    }
-
+    public void actionPerformed(ActionEvent e) {}
 }

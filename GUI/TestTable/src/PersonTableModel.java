@@ -41,6 +41,10 @@ public class PersonTableModel extends AbstractTableModel{
        return null;
     }
 
+//    public ArrayList<Person> getSelectedRow(){
+//        return
+//    }
+
     public ArrayList<Person> getPersons(){
         return persons;
     }
