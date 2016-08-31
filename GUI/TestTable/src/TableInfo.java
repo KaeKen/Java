@@ -29,7 +29,6 @@ public class TableInfo extends JFrame implements ActionListener{
 
         firstInput = new JTextField(17);
         addModule(firstInput, 1, 0);
-
         lastInput = new JTextField(17);
         addModule(lastInput, 1, 1);
 
@@ -42,19 +41,19 @@ public class TableInfo extends JFrame implements ActionListener{
             public void actionPerformed(ActionEvent e) {
                 personTable.getPersons().add(new Person(firstInput.getText(), lastInput.getText()));
                 personTable.fireTableDataChanged();
+                clearFieldInput();
             }
         });
         addModule(addButton, 1, 2);
-
         deleteButton = new JButton("Delete");
         deleteButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 personTable.getPersons().remove(table.getSelectedRow());
                 personTable.fireTableDataChanged();
+                clearFieldInput();
             }
         });
         addModule(deleteButton, 2, 2);
-
         modifyButton = new JButton("Modify");
         modifyButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -62,6 +61,7 @@ public class TableInfo extends JFrame implements ActionListener{
                 thisPerson.setFirstName(firstInput.getText());
                 thisPerson.setLastName(lastInput.getText());
                 personTable.fireTableDataChanged();
+                clearFieldInput();
             }
         });
         addModule(modifyButton, 3, 2);
@@ -108,7 +108,12 @@ public class TableInfo extends JFrame implements ActionListener{
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
+    // -- /static modules -- //
 
     @Override
     public void actionPerformed(ActionEvent e) {}
+    public void clearFieldInput(){
+        firstInput.setText("");
+        lastInput.setText("");
+    }
 }
