@@ -120,14 +120,14 @@ public class TableInfo extends JFrame implements ActionListener{
                 JOptionPane.showMessageDialog(null, "Please select a person.");
             }else{
                 modifyModal thisModal = new modifyModal("Person# " + (table.getSelectedRow() +1));
-                Person thisPerson = personTable.getPersons().get(table.getSelectedRow());
-                thisModal.setFirstNameField(thisPerson.getFirstName());
-                thisModal.setLastNameField(thisPerson.getLastName());
+                Person selectedPerson = personTable.getPersons().get(table.getSelectedRow());
+                thisModal.setFirstNameField(selectedPerson.getFirstName());
+                thisModal.setLastNameField(selectedPerson.getLastName());
                 thisModal.saveButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        thisPerson.setFirstName(thisModal.fName.getText());
-                        thisPerson.setLastName(thisModal.lName.getText());
+                        selectedPerson.setFirstName(thisModal.fName.getText());
+                        selectedPerson.setLastName(thisModal.lName.getText());
                         personTable.fireTableDataChanged();
                         thisModal.setVisible(false);
                     }
