@@ -1,4 +1,6 @@
 *
 !*.java
 !.gitignore
+!Database/testTable/sqlite3.exe
+!*.db
 !*/
