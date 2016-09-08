@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
+import java.sql.*;
 
 public class TableInfo extends JFrame implements ActionListener{
 
@@ -104,6 +105,7 @@ public class TableInfo extends JFrame implements ActionListener{
         model = new PersonsDataModel();
     }
     public void containerSettings(){
+        refrestData();
         container.add(pane);
         pack();
         setVisible(true);
@@ -115,10 +117,10 @@ public class TableInfo extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == addButton){
-            //personTable.getPersons().add(new Person(firstInput.getText(), lastInput.getText()));
             model.addStudent(firstInput.getText(), lastInput.getText(), "");
         }else if(e.getSource() == deleteButton){
-            personTable.getPersons().remove(table.getSelectedRow());
+            Person selectedPerson = personTable.getPersons().get(table.getSelectedRow());
+            model.deleteData(selectedPerson.getId());
         }else if(e.getSource() == modifyButton){
             if(table.getSelectedRow() == -1){
                 JOptionPane.showMessageDialog(null, "Please select a person.");
@@ -130,8 +132,13 @@ public class TableInfo extends JFrame implements ActionListener{
                 thisModal.saveButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
+                        model.updateData(
+                                thisModal.fName.getText(),
+                                thisModal.lName.getText(),
+                                selectedPerson.getId());
                         selectedPerson.setFirstName(thisModal.fName.getText());
                         selectedPerson.setLastName(thisModal.lName.getText());
+                        refrestData();
                         personTable.fireTableDataChanged();
                         thisModal.setVisible(false);
                     }
@@ -144,11 +151,27 @@ public class TableInfo extends JFrame implements ActionListener{
                 });
             }
         }
+        refrestData();
         personTable.fireTableDataChanged();
         clearFieldInput();
     }
+
     public void clearFieldInput(){
         firstInput.setText(null);
         lastInput.setText(null);
     }
+
+    public void refrestData() {
+        ResultSet rs = model.populateData();
+        personTable.resetData();
+        try {
+            while (rs.next()) {
+                personTable.getPersons().add(new Person(rs.getString("first_name"), rs.getString("last_name"), rs.getInt("id")));
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
 }
+

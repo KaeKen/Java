@@ -40,7 +40,9 @@ public class PersonTableModel extends AbstractTableModel{
         }
         return null;
     }
-
+    public void resetData(){
+        persons = new ArrayList<>();
+    }
     public ArrayList<Person> getPersons(){
         return persons;
     }
