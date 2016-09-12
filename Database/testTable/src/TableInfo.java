@@ -136,8 +136,6 @@ public class TableInfo extends JFrame implements ActionListener{
                                 thisModal.fName.getText(),
                                 thisModal.lName.getText(),
                                 selectedPerson.getId());
-                        selectedPerson.setFirstName(thisModal.fName.getText());
-                        selectedPerson.setLastName(thisModal.lName.getText());
                         refrestData();
                         personTable.fireTableDataChanged();
                         thisModal.setVisible(false);

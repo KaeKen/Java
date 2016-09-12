@@ -1,5 +1,4 @@
 import java.sql.*;
-import java.util.ArrayList;
 
 
 public class PersonsDataModel {
@@ -7,11 +6,11 @@ public class PersonsDataModel {
     Statement statement;
     PreparedStatement preparedStatement;
 
+
     public PersonsDataModel(){
         try{
 
-            conn = DriverManager.getConnection("jdbc:sqlite:persons.db");
-            statement = conn.createStatement();
+            connectDB();
 
             String sql = "create table if not exists students (" +
                     "first_name text, " +
@@ -56,18 +55,18 @@ public class PersonsDataModel {
         }
         return resultSet;
     }
-
-    public void deleteData(int id){
-        try {
-            connectDB();
-            String personsQuery = "delete from students where id = ?;";
-            preparedStatement = conn.prepareStatement(personsQuery);
-            preparedStatement.setInt(1, id);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+//
+//    public void deleteData(int id){
+//        try {
+//            connectDB();
+//            String personsQuery = "delete from students where id = ?;";
+//            preparedStatement = conn.prepareStatement(personsQuery);
+//            preparedStatement.setInt(1, id);
+//            preparedStatement.executeUpdate();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     public void updateData(String setFirstName, String setLastName, int id){
         try {
